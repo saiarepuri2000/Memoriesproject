@@ -6,6 +6,18 @@ import PostMessage from '../models/postMessage.js';
 const router = express.Router();
 
 export const getPosts = async (req, res) => { 
+    if(PostMessage.length === 0)
+    {
+        PostMessage.create({
+            title: "trecking",
+            message: "enjoying alot",
+            creator: "sai varma",
+            tags : ["wonderfull","unforgettalble"],
+            selectedFile: "",
+            likeCount: 1,
+            createdAt: new Date("2016-05-18T16:00:00Z")
+        })
+    }
     try {
         const postMessages = await PostMessage.find();
                 
@@ -28,18 +40,6 @@ export const getPost = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-    if(PostMessage.length === 0)
-    {
-        PostMessage.create({
-            title: "trecking",
-            message: "enjoying alot",
-            creator: "sai varma",
-            tags : ["wonderfull","unforgettalble"],
-            selectedFile: "",
-            likeCount: 1,
-            createdAt: new Date("2016-05-18T16:00:00Z")
-        })
-    }
     const { title, message, selectedFile, creator, tags } = req.body;
 
     const newPostMessage = new PostMessage({ title, message, selectedFile, creator, tags })
